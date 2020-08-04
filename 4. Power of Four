@@ -1,0 +1,30 @@
+Given an integer (signed 32 bits), write a function to check whether it is a power of 4.
+
+Example 1:
+Input: 16
+Output: true
+
+Example 2:
+Input: 5
+Output: false
+
+Conditions to satisfy that it is a power of 4 are :
+    1. No of Set Bit Always Be Only ONE 
+    2. That SetBit Possition Should Be always In odd Place [ starting from Left ] 
+    
+Let's See Example :
+
+     No            Bit_re             SetBitPos       No_of_setBit          Valid_power_of_four
+     64         1 0 0 0 0 0 0           7                  1                        True         <= :)
+     128        1 0 0 0 0 0 0 0         8                  1                        False        <=2nd Condition fail :(
+     18         1 0 0 1 0               5,2                2                        False        <=1st Condition Fail :( 
+     
+     
+class Solution {
+public:
+    bool isPowerOfFour(int num) {
+        if(num<0)return false;
+        for(int i=0;i<32;i+=2)if(num==1<<i)return true;
+        return false;
+    }
+};
