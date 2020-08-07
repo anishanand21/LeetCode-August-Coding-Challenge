@@ -32,6 +32,7 @@ class Solution {
         }
         m[x].insert({y,root->val});
         
+        // Hack for y coord (used y+1 instead of y-1) for set to sort pairs correctly
         verticalHelper(root->left,x-1,y+1);
         verticalHelper(root->right,x+1,y+1);
     }
