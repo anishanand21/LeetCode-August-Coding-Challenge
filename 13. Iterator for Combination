@@ -1,0 +1,45 @@
+Design an Iterator class, which has:
+
+  A constructor that takes a string characters of sorted distinct lowercase English letters and a number combinationLength as arguments.
+  A function next() that returns the next combination of length combinationLength in lexicographical order.
+  A function hasNext() that returns True if and only if there exists a next combination.
+ 
+Example:
+
+CombinationIterator iterator = new CombinationIterator("abc", 2); // creates the iterator.
+
+iterator.next(); // returns "ab"
+iterator.hasNext(); // returns true
+iterator.next(); // returns "ac"
+iterator.hasNext(); // returns true
+iterator.next(); // returns "bc"
+iterator.hasNext(); // returns false
+
+class CombinationIterator {
+public:
+    int len, mask;
+    string s;
+    CombinationIterator(string characters, int combinationLength) {
+        s=characters;
+        len = combinationLength;
+        mask = (1 << characters.length()) - 1;
+    }
+    
+    string next() {
+        while(mask && __builtin_popcount(mask) != len) mask--;
+        string out;
+        for(int i=0; i< s.length(); i++) {
+            if (mask & (1 << (s.length() - i - 1)))
+                out += s[i];
+        }
+        mask--;
+        return out;
+    }
+    
+    bool hasNext() {
+        while(mask && __builtin_popcount(mask) != len) mask--;
+        if (!mask)
+            return false;
+        return true;
+    }
+};
