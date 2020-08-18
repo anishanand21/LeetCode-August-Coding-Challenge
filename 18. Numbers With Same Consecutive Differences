@@ -1,0 +1,59 @@
+Return all non-negative integers of length N such that the absolute difference between every two consecutive digits is K.
+Note that every number in the answer must not have leading zeros except for the number 0 itself. For example, 01 has one leading zero and is invalid, but 0 is valid.
+You may return the answer in any order.
+
+
+Example 1:
+Input: N = 3, K = 7
+Output: [181,292,707,818,929]
+Explanation: Note that 070 is not a valid number, because it has leading zeroes.
+
+Example 2:
+Input: N = 2, K = 1
+Output: [10,12,21,23,32,34,43,45,54,56,65,67,76,78,87,89,98]
+
+    We could build the solution level by level. At each label, for each number we will try to extract the unit digit and add k & substract k from it, i.e
+
+        let the number 'num' at any level.
+        unit_digit = num%10;
+        if(unit_digit+k<10)
+          add (num*10+unit_digit+k) to the queue.
+        if(k!=0 && unit_digit-k>=0)
+          add (num*10+unit_digit-k) to the queue.
+          
+    Note: if k = 0, then num10+unit_digit+k == num10+unit_digit-k, that's why special condition.
+
+    For example, given N=3 and K=7
+
+    at the 1st level: [1, 2, 3, 4, 5, 7, 8, 9]
+    at the 2nd level: [18, 29, 70, 81, 92]
+    at the 3rd level: [181, 292, 707, 818, 929]
+
+class Solution {
+public:
+    vector<int> numsSameConsecDiff(int n, int k) {
+      
+        queue<int> q;
+        for(int i=1;i<10;i++){
+            q.push(i);
+        }
+        for(int i=1;i<n;i++){
+            int size = q.size();
+            for(int i=0;i<size;i++){
+                int num = q.front();q.pop();
+                int unit = num%10;
+                if(unit+k<10)
+                    q.push(num*10+unit+k);
+                if(unit-k>=0 && k!=0)
+                    q.push(num*10+unit-k);
+            }
+        }
+        vector<int> ans;
+        if(n==1) ans.push_back(0);
+        while(!q.empty()){
+            ans.push_back(q.front());
+            q.pop();
+        }
+        return ans;
+    }
+};
