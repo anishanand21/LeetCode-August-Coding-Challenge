@@ -1,0 +1,35 @@
+Given an array A of non-negative integers, return an array consisting of all the even elements of A, followed by all the odd elements of A.
+
+You may return any answer array that satisfies this condition.
+
+Example 1:
+Input: [3,1,2,4]
+Output: [2,4,3,1]
+The outputs [4,2,3,1], [2,4,1,3], and [4,2,1,3] would also be accepted.
+
+Most Efficent No Extra Space
+  Idea : -
+  Use That Input array , take 2 pointer
+  place first One as Begin and Second Pointer as end of the array
+  While Iterating , If You get even element increment That 1st Pointer
+  else, First Swap with 2nd Pointer element and then decrease That 2nd Pointer
+  Note :This Time Don't Increment that 1st Pointer
+  Do that Until first_pointer<second_pointer
+
+Time Complexcity  : O(N)
+Space Complexcity : O(1)
+
+class Solution {
+public:
+    vector<int> sortArrayByParity(vector<int>& A) {
+        int j = A.size()-1,i = 0;
+        while(i<j){
+            if(A[i]&1) {
+                swap(A[i],A[j]); 
+                j--;
+            }
+            else i++;
+        }
+        return A;
+    }
+};
